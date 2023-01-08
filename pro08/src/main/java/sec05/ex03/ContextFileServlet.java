@@ -1,0 +1,69 @@
+package sec05.ex03;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class ContextFileServlet
+ */
+@WebServlet("/cfile")
+public class ContextFileServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ContextFileServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		ServletContext context = getServletContext();
+		InputStream is = context.getResourceAsStream("/WEB-INF/bin/init.txt"); // 1byte 단위 
+ 		BufferedReader buffer = new BufferedReader(new InputStreamReader(is)); // 보조 스트림 (줄 단위로 읽가 위해 필요) 문자단위 2byte
+		
+		String menu = null;
+		String menu_member = null;
+		String menu_order = null;
+		String menu_goods = null;
+		while((menu=buffer.readLine()) != null) {
+			StringTokenizer tokens = new StringTokenizer(menu, ","); // 의미있는 단어 키워드를 끊음
+			menu_member = tokens.nextToken();
+			menu_order = tokens.nextToken();
+			menu_goods = tokens.nextToken();
+		}
+		out.print("<html><body>");
+		out.print(menu_member + "<br>");
+		out.print(menu_order + "<br>");
+		out.print(menu_goods + "<br>");
+		out.print("</body></html>");
+		out.close();
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

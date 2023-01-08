@@ -1,0 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+	int dan = Integer.parseInt(request.getParameter("dan"));
+	
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table border="1" width='800'>
+		<tr align="center" bgcolor="#FFFF66">
+			<td colspan="2"><%= dan %>´Ü Ãâ·Â </td>
+	<%
+		for(int i = 1 ; i <= 9 ; i++) {			
+	%>
+		<tr align='center'>
+			<td width='400'>
+				<%= dan %> * <%= i %>
+			</td>	
+			<td width='400'>
+				<%= i * dan %>
+			</td>
+		</tr>
+	<%
+		}
+	%>	
+	</table>
+</body>
+</html>
